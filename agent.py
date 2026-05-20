@@ -92,6 +92,7 @@ def _load_metadata(ctx: JobContext) -> dict[str, Any]:
         "sessionId": fallback_session,
         "jobRole": "BACKEND",
         "resumeText": "Spring Boot 기반 백엔드 3년차. Redis, Kafka, AWS 운영 경험.",
+        "resumeProfile": "",
         "coverLetterText": "",
     }
 
@@ -115,6 +116,7 @@ class InterviewerAgent(Agent):
         session_id: str,
         job_role: str,
         resume_text: str,
+        resume_profile: str,
         cover_letter_text: str,
         llm_service: "LLMService | MockLLMService",
     ):
@@ -127,8 +129,13 @@ class InterviewerAgent(Agent):
             session_id=session_id,
             job_role=job_role,
             resume_text=resume_text,
+            resume_profile=resume_profile,
             cover_letter_text=cover_letter_text,
-            system_prompt=llm_service.build_system_prompt(job_role, resume_text),
+            system_prompt=llm_service.build_system_prompt(
+                job_role,
+                resume_text,
+                resume_profile,
+            ),
         )
 
     async def _say(self, text: str) -> None:
@@ -533,6 +540,7 @@ class GroupInterviewerAgent(Agent):
         job_role: str,
         participants: list[dict[str, Any]],
         fallback_resume_text: str,
+        fallback_resume_profile: str,
         cover_letter_text: str,
         llm_service: "LLMService | MockLLMService",
     ):
@@ -556,10 +564,12 @@ class GroupInterviewerAgent(Agent):
                         session_id=session_id,
                         job_role=job_role,
                         resume_text=participant.get("resumeText") or fallback_resume_text,
+                        resume_profile=participant.get("resumeProfile") or fallback_resume_profile,
                         cover_letter_text=cover_letter_text,
                         system_prompt=llm_service.build_system_prompt(
                             job_role,
                             participant.get("resumeText") or fallback_resume_text,
+                            participant.get("resumeProfile") or fallback_resume_profile,
                         ),
                     ),
                 )
@@ -1085,6 +1095,7 @@ async def entrypoint(ctx: JobContext) -> None:
     mode = metadata.get("mode", "SOLO").upper()
     job_role = metadata.get("jobRole", "BACKEND")
     resume_text = metadata.get("resumeText", "")
+    resume_profile = metadata.get("resumeProfile", "")
     cover_letter_text = metadata.get("coverLetterText", "")
     participants = metadata.get("participants", [])
 
@@ -1093,12 +1104,13 @@ async def entrypoint(ctx: JobContext) -> None:
         "session_id": session_id,
     }
     logger.info(
-        "[entrypoint] room=%s session=%s mode=%s job_role=%s resume_len=%d cover_len=%d participants=%d",
+        "[entrypoint] room=%s session=%s mode=%s job_role=%s resume_len=%d profile_len=%d cover_len=%d participants=%d",
         ctx.room.name,
         session_id,
         mode,
         job_role,
         len(resume_text),
+        len(resume_profile),
         len(cover_letter_text),
         len(participants) if isinstance(participants, list) else 0,
     )
@@ -1128,6 +1140,7 @@ async def entrypoint(ctx: JobContext) -> None:
                 session_id=session_id,
                 job_role=job_role,
                 resume_text=resume_text,
+                resume_profile=resume_profile,
                 cover_letter_text=cover_letter_text,
                 llm_service=llm_service,
             )
@@ -1137,6 +1150,7 @@ async def entrypoint(ctx: JobContext) -> None:
                 job_role=job_role,
                 participants=participants,
                 fallback_resume_text=resume_text,
+                fallback_resume_profile=resume_profile,
                 cover_letter_text=cover_letter_text,
                 llm_service=llm_service,
             )
@@ -1145,6 +1159,7 @@ async def entrypoint(ctx: JobContext) -> None:
             session_id=session_id,
             job_role=job_role,
             resume_text=resume_text,
+            resume_profile=resume_profile,
             cover_letter_text=cover_letter_text,
             llm_service=llm_service,
         )
