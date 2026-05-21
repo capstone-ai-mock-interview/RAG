@@ -1,0 +1,1087 @@
+{
+  "summary": {
+    "source": "pipeline/data_audit/reports/audit_report.json",
+    "review_method": "Ultra-strict question-level filter; requires explicit question form and technical term",
+    "min_recent_year": 2023,
+    "reviewed_candidate_count": 228,
+    "retained_count": 57,
+    "grade_counts": {
+      "A": 13,
+      "B": 44
+    },
+    "usable_question_counts": {
+      "A": 36,
+      "B": 102
+    },
+    "recommendation": "발표 직전 품질 우선 기준. A를 핵심 KB에 적재하고 B는 시간이 남을 때 보조 데이터로 적재."
+  },
+  "items": [
+    {
+      "index": 5,
+      "grade": "B",
+      "reason": "최신 기술 질문은 명확하지만 실제 후기 신호가 약해 보조 데이터로 적합",
+      "title": "첫 파이썬 백엔드 개발자 면접",
+      "url": "https://inmonim.github.io/posts/first-startup-interview-sseol/",
+      "source": "inmonim.github.io",
+      "published_at": "2024-12-16T04:35:00+09:00",
+      "freshness": "recent",
+      "roles": [
+        "devops_infra",
+        "cs_common",
+        "backend",
+        "ai_ml_data",
+        "frontend"
+      ],
+      "usable_questions": [
+        "파이썬 3.13 버전을 써봤다고 했는데, 어떻게 썼는가?",
+        "Django ORM과 SQLAlchemy 중 무엇을 더 선호하는가?",
+        "Github actions, AWS ECR, Docker로 CI/CD를 구축했다고 했는데, 프로세스를 설명해달라"
+      ]
+    },
+    {
+      "index": 7,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "개발자 경력직 기술면접, 준비, 뒤늦은 후기",
+      "url": "https://mellowp-dev.tistory.com/4",
+      "source": "tistory",
+      "published_at": "2019-10-03T15:00:33+09:00",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "추가로 과제에서 JPA 를 사용할 계획이 있는지, TDD 코드도 추가 할건지 ?",
+        "H2 DB 를 사용할건지 ?"
+      ]
+    },
+    {
+      "index": 10,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "직접 경험하며 질문 받은 기술면접 질문 모음",
+      "url": "https://velog.io/@alskt0419/%EC%A7%81%EC%A0%91-%EA%B2%BD%ED%97%98%ED%95%98%EB%A9%B0-%EC%A7%88%EB%AC%B8-%EB%B0%9B%EC%9D%80-%EA%B8%B0%EC%88%A0%EB%A9%B4%EC%A0%91-%EC%A7%88%EB%AC%B8-%EB%AA%A8%EC%9D%8C",
+      "source": "velog",
+      "published_at": "2020-12-06",
+      "freshness": "old",
+      "roles": [
+        "frontend",
+        "backend",
+        "cs_common",
+        "devops_infra",
+        "ai_ml_data"
+      ],
+      "usable_questions": [
+        "typescript를 사용한 이유가 무엇이고 사용했을때 장점이 뭔가요?",
+        "Rest api에 대해 설명해 주세요",
+        "HTTP 메서드가 무엇인가요?",
+        "본인이 알고 있는 자료구조를 있는 대로 설명해주세요",
+        "자료구조를 실무에서 사용한 사례가 있나요?"
+      ]
+    },
+    {
+      "index": 17,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "[실제 면접 질문] 강남 소재 IT 중소기업 백엔드 경력직 면접 후기 - 솔루션 업체",
+      "url": "https://back.tistory.com/44",
+      "source": "tistory",
+      "published_at": "2022-03-08T10:12:41+09:00",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "cs_common",
+        "ai_ml_data",
+        "frontend",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "Q) K.자바 버전은 뭘 쓰셨죠?",
+        "Q) K.Java8의 장점이나 특성을 설명해주세요",
+        "만드셨던 RestAPI에서 각 URL은 어떤 기능들이 있었어요?",
+        "Q) K.Http 메소드 아는 대로 설명해주세요",
+        "Q) K.SpringFramework, SpringBoot , Spring에 대해 아는 대로 설명해주세요"
+      ]
+    },
+    {
+      "index": 18,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "백엔드 개발자 기술 면접 후기",
+      "url": "https://notspoon.tistory.com/32",
+      "source": "tistory",
+      "published_at": "2022-08-06T20:22:23+09:00",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "cs_common",
+        "frontend"
+      ],
+      "usable_questions": [
+        "API개발을 하면서 신경쓰는부분이 뭔가요?",
+        "Java에서 SQL 주입 방지 어떻게 처리?",
+        "왜 Spring batch 썻는지",
+        "spring batch 관련 테이블이 무엇이 있는가"
+      ]
+    },
+    {
+      "index": 22,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "위코드 수료 후 백엔드 면접 후기 및 FAQ1 - 기술면접 · Lunallena TIL Blog",
+      "url": "https://lunayyko.github.io/wecode/2021/10/27/interview1/",
+      "source": "lunayyko.github.io",
+      "published_at": null,
+      "freshness": "unknown",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "JWT는 무엇인가?",
+        "JWT를 왜 사용하였는지?",
+        "JWT의 변조 알고리즘에는 무엇이 있는지?",
+        "JWT가 어떤 방식의 해킹을 당할 수 있는지 그리고 그걸 예방하기 위해서 어떻게 해야하는지?",
+        "Eager Loading은 무엇인가?"
+      ]
+    },
+    {
+      "index": 23,
+      "grade": "B",
+      "reason": "최신 기술 질문은 명확하지만 실제 후기 신호가 약해 보조 데이터로 적합",
+      "title": "신입 프론트엔드 개발자로 취업하기(면접 정리)",
+      "url": "https://velog.io/@jiaeyamm33/%EC%8B%A0%EC%9E%85-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%A1%9C-%EC%B7%A8%EC%97%85%ED%95%98%EA%B8%B0%EB%A9%B4%EC%A0%91-%EC%A0%95%EB%A6%AC",
+      "source": "velog",
+      "published_at": "2023-07-23",
+      "freshness": "recent",
+      "roles": [
+        "frontend",
+        "cs_common",
+        "backend",
+        "ai_ml_data"
+      ],
+      "usable_questions": [
+        "http란 무엇인가?",
+        "http 통신 요청에 대한 결과값에 대해 아는가?",
+        "RESTful API란?",
+        "리액트 쿼리랑 axios의 차이점?"
+      ]
+    },
+    {
+      "index": 32,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "다우데이타 현장 실습 면접",
+      "url": "https://velog.io/@gmlstjq123/%EB%8B%A4%EC%9A%B0%EB%8D%B0%EC%9D%B4%ED%83%80-%ED%98%84%EC%9E%A5-%EC%8B%A4%EC%8A%B5-%EB%A9%B4%EC%A0%91",
+      "source": "velog",
+      "published_at": "2023-12-18",
+      "freshness": "recent",
+      "roles": [
+        "backend",
+        "cs_common",
+        "devops_infra",
+        "ai_ml_data",
+        "frontend"
+      ],
+      "usable_questions": [
+        "③-a 경력사항에 AWS 온라인 교육을 받은 게 있는데, 여기에서 무엇을 배웠나요?",
+        "③-b 구체적으로 어떤 AWS 서비스를 사용했나요?",
+        "③-c AWS 기술을 적용하는 과정에서 어려움은 없었나요?",
+        "④ 백엔드 개발할 때, Spring 말고 Node.js는 안 써보셨어요?"
+      ]
+    },
+    {
+      "index": 34,
+      "grade": "B",
+      "reason": "최신 기술 질문은 명확하지만 실제 후기 신호가 약해 보조 데이터로 적합",
+      "title": "[면접후기] 8/30 매칭데이",
+      "url": "https://velog.io/@hjh3933/%EB%A9%B4%EC%A0%91%ED%9B%84%EA%B8%B0-830-%EB%A7%A4%EC%B9%AD%EB%8D%B0%EC%9D%B4",
+      "source": "velog",
+      "published_at": "2024-09-02",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "질문: restful api에 대해 설명해달라고 하심",
+        "질문: node.js랑 spring중에 뭐가 더 자신있는지?",
+        "질문: 데이터베이스 설계 해본 경험 있는지?"
+      ]
+    },
+    {
+      "index": 35,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "안드로이드 개발자 면접 후기 3탄",
+      "url": "https://haenarashin.github.io/android,/career/2022/05/22/Getting_new_job.html",
+      "source": "haenarashin.github.io",
+      "published_at": "2022-05-22T12:49:00+00:00",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "ai_ml_data",
+        "cs_common",
+        "frontend"
+      ],
+      "usable_questions": [
+        "RxJava에서 flatMap과 switchMap의 차이가 무엇인가요?",
+        "Fragment의 lifecycleOwner로 this, view.lifecycleOwner의 차이를 설명해주세요",
+        "Java에서 checked exception을 왜 Kotlin에서는 사용하지 않았을까요?",
+        "git merge와 rebase의 차이와 각각을 언제 사용하나요?",
+        "가령 예를 들면 HTTTPS vs HTTP의 차이 는 어느 회사든 나올법한 질문이지만 그 대답에 이어 그럼 그 SSL Handshaking이 어떻게 진행되는지도 설명 가능할까요?"
+      ]
+    },
+    {
+      "index": 37,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "2025년 하나은행 상반기 최종합격 후기 (디지털/ICT)",
+      "url": "https://velog.io/@devwoong/2025%EB%85%84-%ED%95%98%EB%82%98%EC%9D%80%ED%96%89-%EC%83%81%EB%B0%98%EA%B8%B0-%EC%B5%9C%EC%A2%85%ED%95%A9%EA%B2%A9-%ED%9B%84%EA%B8%B0-%EB%94%94%EC%A7%80%ED%84%B8ICT",
+      "source": "velog",
+      "published_at": "2025-05-24",
+      "freshness": "recent",
+      "roles": [
+        "backend",
+        "ai_ml_data",
+        "cs_common",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "MLOps의 Continuous training 쪽을 다뤄보고 싶다고 자소서에 적어주셨는데 어떤 개념이고 왜 사용하는지?"
+      ]
+    },
+    {
+      "index": 43,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "JAVA 신입 1차 면접 질문",
+      "url": "https://velog.io/@aleydis/JAVA-%EC%8B%A0%EC%9E%85-1%EC%B0%A8-%EB%A9%B4%EC%A0%91-%EC%A7%88%EB%AC%B8",
+      "source": "velog",
+      "published_at": "2020-09-03",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "데이터베이스에는 어떤 테이블이 있었고, 각 테이블의 컬럼은 뭐가 있었나요?",
+        "프로젝트에서 mvc 패턴을 어떻게 구성했는지",
+        "MVC Model1과 Model2의 차이",
+        "TCP/UDP 차이",
+        "기억에 남는 알고리즘 문제는 무엇인가?"
+      ]
+    },
+    {
+      "index": 44,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "3년차 백엔드 경력직 면접 후기",
+      "url": "https://pizza7311.me/post/diary/3y-backend-interview-review",
+      "source": "pizza7311.me",
+      "published_at": "2025-11-25",
+      "freshness": "recent",
+      "roles": [
+        "backend",
+        "cs_common",
+        "devops_infra",
+        "frontend"
+      ],
+      "usable_questions": [
+        "rdbms, noSql, redis 각각의 차이점과 어떤 상황에서 쓰는게 좋은가?"
+      ]
+    },
+    {
+      "index": 46,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "첫 프론트엔드 인턴 면접 후기[면접탈]",
+      "url": "https://velog.io/@kwak1539/%ED%98%84%EC%9E%A5%EC%8B%A4%EC%8A%B5-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-11-30",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "JavaScript 말고 다른 언어를 사용해본 적이 있는지?",
+        "JavaScript의 Promise에 대해 설명할 수 있는지?",
+        "React를 사용하면서 기존 Vanilla JavaScript와 비교해서 어떤 점이 좋았는지 구체적으로 설명할 수 있는지?",
+        "알고리즘 문제는 Python말고 JavaScript로는 풀어본 경험이 있는지?"
+      ]
+    },
+    {
+      "index": 50,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "[후기] 면접 후기",
+      "url": "https://velog.io/@yaaloo/%ED%9B%84%EA%B8%B0-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2023-06-02",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "MariaDB에 부분 문자열 검색 기능이 있는데, 그건 왜 거르고 ES를 사용했는가?",
+        "매 요청 시마다 세션 스토리지를 조회함으로써 서버 부하를 늘리는 것이 세션 방식의 문제 중 하나인데, 매번 세션 값을 찾는거나, 사용자의 현재 jwt 값을 찾는거나 과연 다를 게...?",
+        "단점은 이전 사용자를 로그아웃 시키기 위해서는 엑세스 토큰을 db에 저장해두고 매 요청마다 일치하는지 확인해야 한다는 것?"
+      ]
+    },
+    {
+      "index": 51,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "[취준 기록] 신입 백엔드 개발자 면접 후기 (기술면접, 인성면접, 최종면접)",
+      "url": "https://ddooroong.tistory.com/entry/%EC%B7%A8%EC%A4%80-%EA%B8%B0%EB%A1%9D-%EC%8B%A0%EC%9E%85-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0-%EA%B8%B0%EC%88%A0%EB%A9%B4%EC%A0%91-%EC%9D%B8%EC%84%B1%EB%A9%B4%EC%A0%91-%EC%B5%9C%EC%A2%85%EB%A9%B4%EC%A0%91",
+      "source": "tistory",
+      "published_at": "2023-07-22T12:56:27+09:00",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "Spring 사용해보았는지?",
+        "Spring을 사용했을 때와 사용하지 않았을 때 본인이 느낀 점은 무엇인지?",
+        "데이터베이스 프로젝트에서 테이블은 총 몇 개가 나왔는지?",
+        "DB 쿼리문은 잘 다루는 편인지?"
+      ]
+    },
+    {
+      "index": 52,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "[Career] 와디즈 백엔드 기술 면접 후기",
+      "url": "https://kkang-joo.tistory.com/15",
+      "source": "tistory",
+      "published_at": "2022-08-19T00:01:27+09:00",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "cs_common",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "rest api가 무엇인지 설명해보세요",
+        "api를 설계할 때 중요하게 생각하는 게 무엇인가 (왜 그게 중요한가, 그거 말고 응답에 ..한 경우에는 어떻게 구성할 건지"
+      ]
+    },
+    {
+      "index": 56,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "서울 중소기업 웹 개발자 취준 후기 - 면접",
+      "url": "https://velog.io/@iamodh/%EC%84%9C%EC%9A%B8-%EC%A4%91%EC%86%8C%EA%B8%B0%EC%97%85-%EC%9B%B9-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%B7%A8%EC%A4%80-%ED%9B%84%EA%B8%B0-%EB%A9%B4%EC%A0%91-0n5eflui",
+      "source": "velog",
+      "published_at": "2025-06-16",
+      "freshness": "recent",
+      "roles": [
+        "frontend",
+        "backend",
+        "ai_ml_data",
+        "cs_common"
+      ],
+      "usable_questions": [
+        "자바스크립트의 함수 파라미터는 값에의한 호출인가요?",
+        "MVC 패턴에서 M은 무엇을 의미하나요?"
+      ]
+    },
+    {
+      "index": 57,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "[취준 기록] 신입 백엔드 개발자 면접 / 기술면접 후기",
+      "url": "https://ddooroong.tistory.com/entry/%EC%B7%A8%EC%A4%80-%EA%B8%B0%EB%A1%9D-%EC%8B%A0%EC%9E%85-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EB%A9%B4%EC%A0%91-%EA%B8%B0%EC%88%A0%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "tistory",
+      "published_at": "2023-07-13T12:55:02+09:00",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "Spring 프로젝트에서 데이터베이스는 어떤걸 사용했는지?"
+      ]
+    },
+    {
+      "index": 59,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "2025 팀네이버 Tech 신입 공채 후기 (코테, 1차 면접)",
+      "url": "https://wooing1084.tistory.com/52",
+      "source": "tistory",
+      "published_at": "2025-05-30T17:19:07+09:00",
+      "freshness": "recent",
+      "roles": [
+        "backend",
+        "cs_common",
+        "devops_infra",
+        "ai_ml_data"
+      ],
+      "usable_questions": [
+        "Git의 통신은 어떻게 동작할까?",
+        "그 중 가장 아쉬웠던 부분으로 MySQL과 MongoDB간의 차이점을 RDB와 NoSQL간 차이점 외에 설명하지 못했다는것이었다"
+      ]
+    },
+    {
+      "index": 63,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "(항해99) 신입 Back-End 개발자 취업 후기",
+      "url": "https://velog.io/@point/%ED%95%AD%ED%95%B499-%EC%8B%A0%EC%9E%85-Back-End-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%B7%A8%EC%97%85-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-03-17",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "cs_common",
+        "ai_ml_data",
+        "frontend"
+      ],
+      "usable_questions": [
+        "spring이 아니라 node.js를 선택한 이유 (학부 때 했던 java가 익숙할 텐데 왜 java 하다가 javascript하는지"
+      ]
+    },
+    {
+      "index": 66,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "💡 [@@소프트 면접 후기] 신입 개발자 면접 경험 공유 (기술 면접 질문 포함)",
+      "url": "https://velog.io/@hyun70022/%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2025-01-29",
+      "freshness": "recent",
+      "roles": [
+        "backend",
+        "frontend",
+        "ai_ml_data"
+      ],
+      "usable_questions": [
+        "\"JavaScript에서 비동기 처리(Ajax, Promise, async/await)의 장점은?\""
+      ]
+    },
+    {
+      "index": 70,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "2023 ICT 상반기 인턴십 면접 후기",
+      "url": "https://sons6488.tistory.com/3",
+      "source": "tistory",
+      "published_at": "2023-02-18T21:57:59+09:00",
+      "freshness": "recent",
+      "roles": [
+        "backend",
+        "cs_common",
+        "devops_infra",
+        "ai_ml_data"
+      ],
+      "usable_questions": [
+        "휠세이프(프로젝트 명) 에 대해서 설명해주세요(알고리즘 설명 및 갈등 해소 경험"
+      ]
+    },
+    {
+      "index": 72,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "🎞️휴맥스 드림버스컴퍼니 지원&면접 후기",
+      "url": "https://velog.io/@dlgkdis801/%ED%9C%B4%EB%A7%A5%EC%8A%A4-%EB%93%9C%EB%A6%BC%EB%B2%84%EC%8A%A4%EC%BB%B4%ED%8D%BC%EB%8B%88-%EC%A7%80%EC%9B%90%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2023-10-19",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "OO 클래스와 OO 알고리즘은 어떻게 이용했나요?",
+        "Spring, SpringBoot, SpringSecurity에 대해서 설명해보세요",
+        "Redis는 어떤 DB인지 설명해주실래요?",
+        "Github, Postman, AWS는 어느 정도로 사용이 가능하신가요?"
+      ]
+    },
+    {
+      "index": 74,
+      "grade": "B",
+      "reason": "최신 기술 질문은 명확하지만 실제 후기 신호가 약해 보조 데이터로 적합",
+      "title": "인턴 후기 | 24년 겨울, CUop 래블업 백엔드 개발자 인턴 후기 -서류/면접 편-",
+      "url": "https://dev-mintcat.tistory.com/9",
+      "source": "tistory",
+      "published_at": "2025-04-28T16:47:38+09:00",
+      "freshness": "recent",
+      "roles": [
+        "ai_ml_data",
+        "backend",
+        "cs_common",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "Git과 GitHub 사용 능력은 필수인데, 사용 경험이 있는지?",
+        "Docker 사용 경험은 있는지?"
+      ]
+    },
+    {
+      "index": 78,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "20220103 면접후기",
+      "url": "https://velog.io/@jihye/20220103-%EB%A9%B4%EC%A0%91%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-01-03",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "프로젝트에서 어떤 기능을 맡아서 개발하였는지, 사용한 라이브러리는 어떤 것이 있는지같이 예상 가능한 질문들도 있었고, 지난번 모의 면접때처럼 http와 https의 차이는 무엇인지 아는지 물어보셨다",
+        "JAVA란 무엇일까?"
+      ]
+    },
+    {
+      "index": 80,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "2차 면접 후기 정리",
+      "url": "https://velog.io/@god0478/2%EC%B0%A8-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0-%EC%A0%95%EB%A6%AC",
+      "source": "velog",
+      "published_at": "2024-10-25",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "기술면접에서 물어보셨던게 일단 프로젝트 관련해서 jwt header 말로 다른 방법으로 보낼 수있는 방법이 있을까요?"
+      ]
+    },
+    {
+      "index": 81,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "면접 후기",
+      "url": "https://velog.io/@the100-00/%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-07-21",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "frontend",
+        "ai_ml_data"
+      ],
+      "usable_questions": [
+        "데이터베이스 관련 경험이 있다면 말해보라",
+        "트랜잭션 어노테이션 사용 경험 있는지?",
+        "스프링 시큐리티 사용 경험이 있는지?"
+      ]
+    },
+    {
+      "index": 82,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "2024 미래내일 일경험 IT 백엔드 개발자 면접 후기",
+      "url": "https://eod940.tistory.com/55",
+      "source": "tistory",
+      "published_at": "2024-05-18T22:04:31+09:00",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "파이썬과 자바 언어의 차이",
+        "스프링 컨테이너에 대해서 설명해주세요"
+      ]
+    },
+    {
+      "index": 87,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "백엔드 중소기업 첫번째 면접 후기",
+      "url": "https://velog.io/@robolab1902/%EB%B0%B1%EC%97%94%EB%93%9C-%EC%A4%91%EC%86%8C%EA%B8%B0%EC%97%85-%EC%B2%AB%EB%B2%88%EC%A7%B8-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-01-19",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "기억 나는 것만 살짝 생각해보면, Framework 중 MVC 모델이 무엇이고 MVC 모델을 쓰는 종류엔 무엇이 있냐",
+        "AOP와 DI를 설명해보아라",
+        "JPA의 영속성 컨텍스트가 해주는 역할이 무엇이냐?",
+        "[Spring] DI가 무엇일까?"
+      ]
+    },
+    {
+      "index": 88,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "[2024.10 ~ 2024.12] 백엔드 개발 3개월 인턴 회고 (+ 면접 후기)",
+      "url": "https://wooing1084.tistory.com/42",
+      "source": "tistory",
+      "published_at": "2025-03-17T15:42:58+09:00",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "Git의 통신은 어떻게 동작할까?"
+      ]
+    },
+    {
+      "index": 90,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "JavaScript 신입 백엔드 개발자 기술 면접 후기",
+      "url": "https://velog.io/@s_hajin/JavaScript-%EC%8B%A0%EC%9E%85-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B8%B0%EC%88%A0-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2023-05-12",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "웹 브라우저에서의 JS와 Node.js의 차이점",
+        "DB 설계는 어떻게 했는지"
+      ]
+    },
+    {
+      "index": 93,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "간단한 면접 후기",
+      "url": "https://velog.io/@god0478/%EA%B0%84%EB%8B%A8%ED%95%9C-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2024-10-16",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "redis, elasticCache?",
+        "자바스크립트 es6 이란 무엇인가 ?",
+        "jwt vs session 차이"
+      ]
+    },
+    {
+      "index": 97,
+      "grade": "B",
+      "reason": "최신 기술 질문은 명확하지만 실제 후기 신호가 약해 보조 데이터로 적합",
+      "title": "비전공자의 백엔드개발자 면접후기",
+      "url": "https://velog.io/@9ruem2/%EB%B9%84%EC%A0%84%EA%B3%B5%EC%9E%90%EC%9D%98-%EB%B0%B1%EC%97%94%EB%93%9C%EA%B0%9C%EB%B0%9C%EC%9E%90-%EB%A9%B4%EC%A0%91%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2023-12-19",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "api문서화를 하면서 목객체를 사용할 수 있는데 왜 swagger를 사용했나?",
+        "http메서드에 대해 설명해보라",
+        "시큐리티는 api문서화할 때 어떻게 적용했나?",
+        "mvc패턴은 어떤것을 사용했나?",
+        "데이터베이스는 어디수준까지 알고있나?"
+      ]
+    },
+    {
+      "index": 98,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "면접 질문 정리 및 후기",
+      "url": "https://velog.io/@god0478/%EB%A9%B4%EC%A0%91-%EC%A7%88%EB%AC%B8-%EC%A0%95%EB%A6%AC-%EB%B0%8F-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2025-03-11",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "redis 관련해서 분산락에 대한 질문 reddisson 방식과 lettuce 방식의 차이점",
+        "그리고 인증 관련해서 jwt 방식과 session 방식의 차이 그리고 jpa와 hibernate가 뭐고 어떤 차이가있는지 에대한 질문이였습니다"
+      ]
+    },
+    {
+      "index": 99,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "당근마켓 면접 후기 및 회고",
+      "url": "https://velog.io/@dion/%EB%8B%B9%EA%B7%BC%EB%A7%88%EC%BC%93-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0-%EB%B0%8F-%ED%9A%8C%EA%B3%A0",
+      "source": "velog",
+      "published_at": "2020-11-07",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "백기선님 온라인 스터디 1주차 - JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가"
+      ]
+    },
+    {
+      "index": 105,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "면접 회고 01",
+      "url": "https://velog.io/@kimlh2/%EB%A9%B4%EC%A0%91-%ED%9A%8C%EA%B3%A0-01-h0dh6lhd",
+      "source": "velog",
+      "published_at": "2022-04-14",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "ai_ml_data",
+        "cs_common",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "과제에서 개선할 점은 없는지 캐시를 사용한 의도가 무엇인지 등등을 물어보셨다"
+      ]
+    },
+    {
+      "index": 106,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "현대오토에버 24년 10월 신입채용 1차면접 후기 (백엔드/차량 관제)",
+      "url": "https://xorjsghkd1011.tistory.com/173",
+      "source": "tistory",
+      "published_at": "2024-12-04T11:41:54+09:00",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "새 프로젝트에서 MongoDB, Redis 사용 예정 → 둘다 NoSQL인데 차이는?",
+        "CI/CD 파이프라인 구축 경험 → 거기서 git도 사용해봤는지?",
+        "git이 파이프라인에서 어떻게 활용되는가?"
+      ]
+    },
+    {
+      "index": 120,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "온라인마케팅대행사 프론트엔드 신입 면접 후기",
+      "url": "https://domns.tistory.com/entry/%EC%98%A8%EB%9D%BC%EC%9D%B8%EB%A7%88%EC%BC%80%ED%8C%85%EB%8C%80%ED%96%89%EC%82%AC-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%8B%A0%EC%9E%85-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "tistory",
+      "published_at": "2024-06-18T23:56:05+09:00",
+      "freshness": "recent",
+      "roles": [
+        "frontend",
+        "ai_ml_data",
+        "backend",
+        "cs_common"
+      ],
+      "usable_questions": [
+        "CSR, SSR가 무엇이고 언제 어느걸 쓰는게 좋은지"
+      ]
+    },
+    {
+      "index": 121,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "[취준] 백엔드 개발자 신입 첫 면접 후기",
+      "url": "https://velog.io/@seoya_lee/%EC%B7%A8%EC%A4%80-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%8B%A0%EC%9E%85-%EC%B2%AB-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2023-02-11",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "SQL Injection을 아는지?"
+      ]
+    },
+    {
+      "index": 125,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "신입 웹 퍼블리셔 인성+기술 면접 후기",
+      "url": "https://velog.io/@kyung_99/%EC%8B%A0%EC%9E%85-%EC%9B%B9-%ED%8D%BC%EB%B8%94%EB%A6%AC%EC%85%94-%EC%9D%B8%EC%84%B1%EA%B8%B0%EC%88%A0-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-08-25",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "Q: JQuery랑 JavaScript 차이는 무엇인가?",
+        "[CSS] display 속성 block, inline-block, inline 차이점"
+      ]
+    },
+    {
+      "index": 129,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "코인원, 빗썸 면접 후기",
+      "url": "https://allroundplaying.tistory.com/68",
+      "source": "tistory",
+      "published_at": "2018-03-13T17:51:39+09:00",
+      "freshness": "old",
+      "roles": [
+        "ai_ml_data",
+        "backend",
+        "devops_infra",
+        "cs_common"
+      ],
+      "usable_questions": [
+        "\"브랜치, 태그, Git 권한 관리를 어떻게 했는지\" 이런 답변이 빠져있다고 한다"
+      ]
+    },
+    {
+      "index": 132,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "2025 토스 NEXT 백엔드 합격 후기",
+      "url": "https://flight-developer-stroy.tistory.com/106",
+      "source": "tistory",
+      "published_at": "2025-09-24T16:37:52+09:00",
+      "freshness": "recent",
+      "roles": [
+        "backend",
+        "ai_ml_data",
+        "cs_common",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "도 코테 언어가 자바랑 c로 제한이였나요?"
+      ]
+    },
+    {
+      "index": 136,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "첫 면접 후기",
+      "url": "https://velog.io/@junsu930/%EC%B2%AB-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2023-07-20",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "spring framework는 사용 가능하지만 spring boot나 전자정부 프레임워크는 사용하지 않았어서 그 차이를 좀 메꿀 수 있게 공부해야 할 것 같다",
+        "pl/sql이란?",
+        "전자정부프레임워크와 spring boot의 차이점"
+      ]
+    },
+    {
+      "index": 137,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "LG전자 최종 합격 후기",
+      "url": "https://velog.io/@gmlstjq123/LG%EC%A0%84%EC%9E%90-%EC%B5%9C%EC%A2%85-%ED%95%A9%EA%B2%A9-%ED%9B%84%EA%B8%B0-988x5k9n",
+      "source": "velog",
+      "published_at": "2024-12-24",
+      "freshness": "recent",
+      "roles": [
+        "ai_ml_data",
+        "backend",
+        "frontend"
+      ],
+      "usable_questions": [
+        "저 또한 실제로 영어 면접에서 첫 질문이 \"What do you do?\"였는데, 이 표현의 의미를 잘 몰라서, \"I’m sorry but I didn’t understand what you said"
+      ]
+    },
+    {
+      "index": 145,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "스타트업 면접 후기",
+      "url": "https://velog.io/@kimseungho/%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2024-11-01",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "테스트와 같은 과정이 실무와 같다면 RDBMS를 설계는 어떻게 진행하는가?"
+      ]
+    },
+    {
+      "index": 153,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "웹 개발자로 면접 후기",
+      "url": "https://velog.io/@developer119/%EC%9B%B9-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%A1%9C-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2021-03-18",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "싱글페이지 웹가 서버사이드 렌더링의 차이점 및 사용자가 느낄 수 있는 장점 및 단점"
+      ]
+    },
+    {
+      "index": 154,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "중소기업 신입 개발자 면접 후기",
+      "url": "https://velog.io/@yeony402/%EC%A4%91%EC%86%8C%EA%B8%B0%EC%97%85-%EC%8B%A0%EC%9E%85-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2024-06-20",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "JWT를 사용한 이유가 무엇인가요?",
+        "Spring 프레임워크에 대해 설명해보세요"
+      ]
+    },
+    {
+      "index": 161,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "신입 백엔드 개발자 취뽀여정 1탄 - 중소(si)기업 면접 후기",
+      "url": "https://velog.io/@kimhyejin67/%EC%8B%A0%EC%9E%85-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%B7%A8%EB%BD%80%EC%97%AC%EC%A0%95-2%ED%83%84-%EC%A4%91%EC%86%8Csi%EA%B8%B0%EC%97%85-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2024-02-03",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "SQL문 얼마나 잘 쓸 줄 아는지?"
+      ]
+    },
+    {
+      "index": 163,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "티제이랩스 면접 후기",
+      "url": "https://velog.io/@yeonwoo1125/%ED%8B%B0%EC%A0%9C%EC%9D%B4%EB%9E%A9%EC%8A%A4-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-05-12",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "그럼 데이터베이스 설계부터 다하신건가요?"
+      ]
+    },
+    {
+      "index": 166,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "웹퍼블리셔 면접 후기",
+      "url": "https://velog.io/@wizwic/%EC%9B%B9%ED%8D%BC%EB%B8%94%EB%A6%AC%EC%85%94-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2022-09-27",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "Javascript와 jQuery 얼마나 다룰 줄 아세요?"
+      ]
+    },
+    {
+      "index": 170,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "준비가 정말정말 미흡했던 통화 기술면접 후기;",
+      "url": "https://velog.io/@terria1020/%EC%A4%80%EB%B9%84%EA%B0%80-%EC%A0%95%EB%A7%90%EC%A0%95%EB%A7%90-%EB%AF%B8%ED%9D%A1%ED%96%88%EB%8D%98-%ED%86%B5%ED%99%94-%EA%B8%B0%EC%88%A0%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0",
+      "source": "velog",
+      "published_at": "2023-06-22",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "HTTP 1.0 vs HTTP 2.0 차이"
+      ]
+    },
+    {
+      "index": 175,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "나의 첫 개발회사 면접 후기(바로고 인턴 면접)",
+      "url": "https://velog.io/@klqwrx7004/%EB%82%98%EC%9D%98-%EC%B2%AB-%EA%B0%9C%EB%B0%9C%ED%9A%8C%EC%82%AC-%EB%A9%B4%EC%A0%91-%ED%9B%84%EA%B8%B0%EB%B0%94%EB%A1%9C%EA%B3%A0-%EC%9D%B8%ED%84%B4-%EB%A9%B4%EC%A0%91",
+      "source": "velog",
+      "published_at": "2022-03-30",
+      "freshness": "old",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "자바스크립트를 하면서 async/await을 활용하였다고 하였는데 이 async/await을 왜 쓰는건지?",
+        "마지막으로 공통질문을 하셨는데 Rest API 에 대해 자유롭게 설명해보시라고 하셨다"
+      ]
+    },
+    {
+      "index": 177,
+      "grade": "A",
+      "reason": "2023년 이후 실제 기업 면접 후기이며 초엄격 필터 통과 질문이 2개 이상 있음",
+      "title": "신입 개발자 취업 후기 (면접팁)",
+      "url": "https://velog.io/@krhopy/%EC%8B%A0%EC%9E%85-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%B7%A8%EC%97%85-%ED%9B%84%EA%B8%B0-%EB%A9%B4%EC%A0%91%ED%8C%81",
+      "source": "velog",
+      "published_at": "2023-01-16",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "python과 java의 차이점 ( 둘다 공부를 했어서 질문이 들어왔어용",
+        "svn 과 github 차이 ( 둘다 써봤어서 물어보심"
+      ]
+    },
+    {
+      "index": 191,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "내가 받은 '백엔드 기술 면접 질문' 모음",
+      "url": "https://velog.io/@wijoonwu/%EB%A9%B4%EC%A0%91-%EC%A7%88%EB%AC%B8",
+      "source": "velog",
+      "published_at": "2022-11-01",
+      "freshness": "old",
+      "roles": [
+        "backend",
+        "cs_common",
+        "frontend",
+        "ai_ml_data",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "JWT에 대해서 얼마나 알고 있는지?",
+        "데이터 개수가 증가하면 알고리즘 성능결정에 가장 큰 요인은 무엇인지 따지는 것",
+        "자바8과 11의 차이점",
+        "API, HTTP API와 REST API의 차이점"
+      ]
+    },
+    {
+      "index": 195,
+      "grade": "B",
+      "reason": "실제 기업 면접 맥락이나 질문 수/최신성이 부족해 보조 데이터로 적합",
+      "title": "안드로이드 개발자 인턴 후기 (가상화폐 거래소 코빗에서의 회고록)",
+      "url": "https://daryeou.tistory.com/12",
+      "source": "tistory",
+      "published_at": "2022-05-04T22:34:51+09:00",
+      "freshness": "old",
+      "roles": [
+        "ai_ml_data",
+        "backend",
+        "cs_common",
+        "frontend",
+        "devops_infra"
+      ],
+      "usable_questions": [
+        "MVC 패턴과 MVVM 패턴의 차이점은?",
+        "Java에서 WildCard 선언 시 특정 클래스나 상위 클래스, 하위 클래스라는 제약을 해당 클래스나 메소드를 사용하는 위치에서 \"<?",
+        "그래서 주변 선배님들에게 API관련 코드에 대해 질문도 여럿하고, 금융서비스 특성 상 연산 관련 클래스가 몇십개에 달하기에 꽤나 애먹으며 어떻게하면 속도를 높힐 수 있는지 자주 물어보았습니다"
+      ]
+    },
+    {
+      "index": 220,
+      "grade": "B",
+      "reason": "최신 기술 질문은 명확하지만 실제 후기 신호가 약해 보조 데이터로 적합",
+      "title": "면접 예상 질문 [JAVA & SPRING]",
+      "url": "https://velog.io/@nodada/%EB%A9%B4%EC%A0%91-%EC%98%88%EC%83%81-%EC%A7%88%EB%AC%B8-JAVA-SPRING",
+      "source": "velog",
+      "published_at": "2023-09-07",
+      "freshness": "recent",
+      "roles": [
+        "unknown"
+      ],
+      "usable_questions": [
+        "자바언어의 특징이 무엇인가요?",
+        "자바의 장단점에 대해 아시나요?",
+        "JDBC 란 무엇인가요?",
+        "MVC 패턴이란 무엇인가요?",
+        "트랜잭션이란 무엇인가요?"
+      ]
+    }
+  ]
+}
