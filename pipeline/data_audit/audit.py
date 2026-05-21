@@ -15,7 +15,7 @@ import os
 import re
 import time
 from collections import Counter
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
@@ -148,6 +148,119 @@ TECH_TERMS = (
     "데이터 사이언티스트",
 )
 BACKEND_TERMS = TECH_TERMS  # 하위 호환 별칭
+ROLE_TERMS = {
+    "backend": (
+        "백엔드",
+        "서버",
+        "Java",
+        "자바",
+        "Spring",
+        "스프링",
+        "JPA",
+        "DB",
+        "데이터베이스",
+        "SQL",
+        "JWT",
+        "OAuth",
+        "트랜잭션",
+        "인덱스",
+        "쿼리",
+        "캐시",
+        "HTTP",
+        "HTTPS",
+        "TCP",
+        "Node.js",
+        "Redis",
+        "Kafka",
+        "MSA",
+    ),
+    "frontend": (
+        "프론트엔드",
+        "React",
+        "리액트",
+        "Vue",
+        "Angular",
+        "TypeScript",
+        "타입스크립트",
+        "JavaScript",
+        "자바스크립트",
+        "HTML",
+        "CSS",
+        "DOM",
+        "렌더링",
+        "번들러",
+        "Webpack",
+        "Vite",
+        "Next.js",
+        "Nuxt",
+        "상태관리",
+        "Redux",
+        "Recoil",
+        "브라우저",
+        "CORS",
+        "CSR",
+        "SSR",
+    ),
+    "devops_infra": (
+        "DevOps",
+        "인프라",
+        "CI/CD",
+        "파이프라인",
+        "Terraform",
+        "Ansible",
+        "Jenkins",
+        "Github Actions",
+        "ArgoCD",
+        "Helm",
+        "모니터링",
+        "Prometheus",
+        "Grafana",
+        "로드밸런서",
+        "오토스케일링",
+        "VPC",
+        "서브넷",
+        "AWS",
+        "Docker",
+        "Kubernetes",
+    ),
+    "ai_ml_data": (
+        "AI",
+        "머신러닝",
+        "딥러닝",
+        "Python",
+        "파이썬",
+        "TensorFlow",
+        "PyTorch",
+        "모델",
+        "학습",
+        "데이터 파이프라인",
+        "ETL",
+        "Spark",
+        "Hadoop",
+        "MLOps",
+        "특성공학",
+        "피처",
+        "벡터",
+        "임베딩",
+        "RAG",
+        "LLM",
+        "GPT",
+        "데이터 엔지니어",
+        "데이터 사이언티스트",
+    ),
+    "cs_common": (
+        "운영체제",
+        "네트워크",
+        "자료구조",
+        "알고리즘",
+        "프로토콜",
+        "Git",
+        "Branch",
+        "API",
+        "REST",
+        "MVC",
+    ),
+}
 TRUSTED_PROGRAMS = (
     "소프트웨어 마에스트로",
     "SW마에스트로",
@@ -289,6 +402,8 @@ class AuditResult:
     content_chars: int
     question_count: int
     question_samples: list[str]
+    roles: list[str] = field(default_factory=list)
+    freshness: str = "unknown"
 
 
 def load_queries(path: Path) -> list[str]:
@@ -346,28 +461,45 @@ def search_naver(queries: list[str], max_results_per_query: int) -> list[Candida
     for query in queries:
         for target in targets:
             url = f"https://openapi.naver.com/v1/search/{target}.json"
-            params = {"query": query, "display": max_results_per_query, "sort": "date"}
-            try:
-                resp = requests.get(url, params=params, headers=headers, timeout=10)
-                resp.raise_for_status()
-                items = resp.json().get("items", [])
-            except Exception as exc:
-                print(f"[audit] Naver 검색 실패 query={query!r}, target={target}: {exc}")
-                continue
+            fetched = 0
+            start = 1
+            while fetched < max_results_per_query and start <= 1000:
+                display = min(100, max_results_per_query - fetched)
+                params = {
+                    "query": query,
+                    "display": display,
+                    "start": start,
+                    "sort": "date",
+                }
+                try:
+                    resp = requests.get(url, params=params, headers=headers, timeout=10)
+                    resp.raise_for_status()
+                    items = resp.json().get("items", [])
+                except Exception as exc:
+                    print(f"[audit] Naver 검색 실패 query={query!r}, target={target}, start={start}: {exc}")
+                    break
 
-            for item in items:
-                link = item.get("link") or item.get("originallink")
-                if not link:
-                    continue
-                results.append(
-                    Candidate(
-                        query=query,
-                        title=clean_text(item.get("title", "")),
-                        url=link,
-                        source=guess_source(link),
+                if not items:
+                    break
+
+                for item in items:
+                    link = item.get("link") or item.get("originallink")
+                    if not link:
+                        continue
+                    results.append(
+                        Candidate(
+                            query=query,
+                            title=clean_text(item.get("title", "")),
+                            url=link,
+                            source=guess_source(link),
+                        )
                     )
-                )
-            time.sleep(0.2)
+                    fetched += 1
+                    if fetched >= max_results_per_query:
+                        break
+
+                start += len(items)
+                time.sleep(0.2)
     return dedupe_candidates(results)
 
 
@@ -584,12 +716,16 @@ def dedupe_candidates(candidates: Iterable[Candidate]) -> list[Candidate]:
     seen: set[str] = set()
     unique: list[Candidate] = []
     for candidate in candidates:
-        normalized_url = candidate.url.split("#", 1)[0].rstrip("/")
+        normalized_url = normalize_url(candidate.url)
         if normalized_url in seen:
             continue
         seen.add(normalized_url)
         unique.append(candidate)
     return unique
+
+
+def normalize_url(url: str) -> str:
+    return url.split("#", 1)[0].rstrip("/")
 
 
 def fetch_html(url: str) -> str | None:
@@ -648,6 +784,12 @@ def extract_published_at(raw_html: str, text: str) -> str | None:
     return None
 
 
+def classify_freshness(published_at: str | None, min_recent_year: int) -> str:
+    if not published_at or not published_at[:4].isdigit():
+        return "unknown"
+    return "recent" if int(published_at[:4]) >= min_recent_year else "old"
+
+
 def html_to_text(raw_html: str) -> str:
     without_scripts = re.sub(r"<(script|style).*?</\1>", " ", raw_html, flags=re.IGNORECASE | re.DOTALL)
     with_breaks = re.sub(r"</(p|div|li|h[1-6]|br|tr)>", "\n", without_scripts, flags=re.IGNORECASE)
@@ -681,8 +823,8 @@ def extract_question_samples(text: str) -> list[str]:
             continue
         has_question_mark = "?" in line or "？" in line
         has_question_hint = any(term in line for term in QUESTION_HINTS)
-        has_backend_hint = any(term.lower() in line.lower() for term in TECH_TERMS)
-        if has_backend_hint and (has_question_mark or has_question_hint):
+        has_tech_hint = any(term.lower() in line.lower() for term in TECH_TERMS)
+        if has_tech_hint and (has_question_mark or has_question_hint):
             if not any(noise in line for noise in NOISE_TERMS):
                 samples.append(line)
         if len(samples) >= 10:
@@ -690,14 +832,34 @@ def extract_question_samples(text: str) -> list[str]:
     return samples
 
 
+def count_terms(text: str, terms: Iterable[str]) -> int:
+    lowered = text.lower()
+    return sum(1 for term in terms if term.lower() in lowered)
+
+
+def detect_roles(text: str, question_samples: list[str]) -> list[str]:
+    target = f"{text}\n" + "\n".join(question_samples)
+    role_scores = {
+        role: count_terms(target, terms)
+        for role, terms in ROLE_TERMS.items()
+    }
+    roles = [
+        role
+        for role, score in sorted(role_scores.items(), key=lambda item: (-item[1], item[0]))
+        if score > 0
+    ]
+    return roles or ["unknown"]
+
+
 def classify(candidate: Candidate, title: str, text: str, min_content_chars: int) -> AuditResult:
     joined = f"{title}\n{text}"
     question_samples = extract_question_samples(text)
     question_count = len(question_samples)
+    roles = detect_roles(joined, question_samples)
 
     actual_hits = sum(1 for term in ACTUAL_REVIEW_SIGNALS if term in joined)
     question_bank_hits = sum(1 for term in QUESTION_BANK_SIGNALS if term in joined)
-    backend_hits = sum(1 for term in BACKEND_TERMS if term.lower() in joined.lower())
+    tech_hits = count_terms(joined, TECH_TERMS)
     interview_hits = sum(1 for term in INTERVIEW_TERMS if term in joined)
     noise_hits = sum(1 for term in NOISE_TERMS if term in joined)
     low_trust_source = candidate.source in LOW_TRUST_DOMAINS
@@ -706,7 +868,7 @@ def classify(candidate: Candidate, title: str, text: str, min_content_chars: int
     trusted_program_hit = any(term.lower() in joined.lower() for term in TRUSTED_PROGRAMS)
     review_title_signal = "면접" in title and "후기" in title
 
-    score = question_count * 3 + actual_hits * 8 + backend_hits * 2 + interview_hits * 2
+    score = question_count * 3 + actual_hits * 8 + tech_hits * 2 + interview_hits * 2
     score -= question_bank_hits * 3 + noise_hits * 10
     score -= non_company_hits * 6
     if low_trust_source:
@@ -720,7 +882,7 @@ def classify(candidate: Candidate, title: str, text: str, min_content_chars: int
         grade = "D"
         reason = "신뢰도가 낮은 커뮤니티 출처라 KB 원천 데이터에서 제외 권장"
     elif guide_or_promotion_source:
-        if question_count >= 5 and backend_hits > 0:
+        if question_count >= 5 and tech_hits > 0:
             grade = "C"
             reason = "실제 후기보다 가이드/질문은행/홍보성 출처라 보조 자료로만 활용 권장"
         else:
@@ -735,7 +897,7 @@ def classify(candidate: Candidate, title: str, text: str, min_content_chars: int
     elif len(text) < min_content_chars and question_count < 3:
         grade = "D"
         reason = f"본문이 {min_content_chars}자 미만이고 질문 후보가 부족함"
-    elif (actual_hits > 0 or review_title_signal or trusted_program_hit) and question_count >= 1 and backend_hits > 0:
+    elif (actual_hits > 0 or review_title_signal or trusted_program_hit) and question_count >= 1 and tech_hits > 0:
         grade = "A"
         reason = "실제 면접 신호와 구체 기술 질문 후보가 있음"
     elif (actual_hits > 0 or review_title_signal or trusted_program_hit) and question_count >= 1:
@@ -744,9 +906,9 @@ def classify(candidate: Candidate, title: str, text: str, min_content_chars: int
     elif question_bank_hits > 0 and question_count >= 5:
         grade = "C"
         reason = "예상 질문/질문 은행 성격으로 활용 가능"
-    elif question_count >= 5 and backend_hits > 0 and interview_hits > 0:
+    elif question_count >= 5 and tech_hits > 0 and interview_hits > 0:
         grade = "C"
-        reason = "백엔드 면접 질문 후보는 많지만 실제 후기 신호가 약함"
+        reason = "개발 직무 기술면접 질문 후보는 많지만 실제 후기 신호가 약함"
     else:
         grade = "D"
         reason = "실제 면접 질문 데이터로 쓰기 어려움"
@@ -763,6 +925,7 @@ def classify(candidate: Candidate, title: str, text: str, min_content_chars: int
         content_chars=len(text),
         question_count=question_count,
         question_samples=question_samples[:5],
+        roles=roles,
     )
 
 
@@ -771,10 +934,23 @@ def audit_candidates(
     fetch_limit: int,
     min_content_chars: int,
     sleep_seconds: float,
+    min_recent_year: int,
+    existing_results: list[AuditResult] | None = None,
+    checkpoint_path: Path | None = None,
+    checkpoint_every: int = 25,
 ) -> list[AuditResult]:
-    results: list[AuditResult] = []
-    for index, candidate in enumerate(candidates[:fetch_limit], 1):
-        print(f"[audit] ({index}/{min(fetch_limit, len(candidates))}) {candidate.url}")
+    results: list[AuditResult] = list(existing_results or [])
+    seen_urls = {normalize_url(result.url) for result in results}
+    target_candidates = candidates[:fetch_limit]
+    total = len(target_candidates)
+    processed_since_checkpoint = 0
+
+    for index, candidate in enumerate(target_candidates, 1):
+        if normalize_url(candidate.url) in seen_urls:
+            print(f"[audit] ({index}/{total}) skip existing {candidate.url}")
+            continue
+
+        print(f"[audit] ({index}/{total}) {candidate.url}")
         raw_html = fetch_html(candidate.url)
         if not raw_html:
             continue
@@ -783,14 +959,56 @@ def audit_candidates(
         title = extract_title(raw_html, candidate.title)
         result = classify(candidate, title, text, min_content_chars)
         result.published_at = extract_published_at(raw_html, text)
+        result.freshness = classify_freshness(result.published_at, min_recent_year)
         results.append(result)
+        seen_urls.add(normalize_url(candidate.url))
+        processed_since_checkpoint += 1
+
+        if checkpoint_path and checkpoint_every > 0 and processed_since_checkpoint >= checkpoint_every:
+            write_checkpoint(results, checkpoint_path)
+            processed_since_checkpoint = 0
+
         time.sleep(sleep_seconds)
+
+    if checkpoint_path:
+        write_checkpoint(results, checkpoint_path)
+
     return sorted(results, key=lambda item: (item.grade, -item.score, item.source))
+
+
+def load_results(path: Path) -> list[AuditResult]:
+    if not path.exists():
+        return []
+
+    data = json.loads(path.read_text(encoding="utf-8"))
+    raw_results = data.get("results", [])
+    results: list[AuditResult] = []
+    for item in raw_results:
+        item.setdefault("roles", ["unknown"])
+        item.setdefault("freshness", classify_freshness(item.get("published_at"), 2023))
+        try:
+            results.append(AuditResult(**item))
+        except TypeError:
+            continue
+    return results
+
+
+def write_checkpoint(results: list[AuditResult], path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "summary": summarize(results),
+        "results": [asdict(result) for result in results],
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"[audit] checkpoint saved: {path}")
 
 
 def summarize(results: list[AuditResult]) -> dict:
     grade_counts = Counter(result.grade for result in results)
     source_counts = Counter(result.source for result in results)
+    role_counts = Counter(role for result in results for role in (result.roles or ["unknown"]))
+    freshness_counts = Counter(result.freshness or "unknown" for result in results)
+    recent_grade_counts = Counter(result.grade for result in results if result.freshness == "recent")
     recent_grade_a = [
         result
         for result in results
@@ -803,6 +1021,9 @@ def summarize(results: list[AuditResult]) -> dict:
         "total_fetched": len(results),
         "grade_counts": dict(sorted(grade_counts.items())),
         "source_counts": dict(source_counts.most_common()),
+        "role_counts": dict(role_counts.most_common()),
+        "freshness_counts": dict(freshness_counts.most_common()),
+        "recent_grade_counts": dict(sorted(recent_grade_counts.items())),
         "latest_grade_a_date": recent_grade_a[0].published_at if recent_grade_a else None,
         "avg_questions_per_grade_a_doc": round(
             sum(result.question_count for result in results if result.grade == "A")
@@ -838,6 +1059,9 @@ def render_markdown(summary: dict, results: list[AuditResult]) -> str:
         f"- 수집 성공 문서 수: `{summary['total_fetched']}`",
         f"- 등급별 개수: `{summary['grade_counts']}`",
         f"- 소스별 개수: `{summary['source_counts']}`",
+        f"- 직무/기술영역별 개수: `{summary['role_counts']}`",
+        f"- 최신성 개수: `{summary['freshness_counts']}`",
+        f"- 최신 문서 등급별 개수: `{summary['recent_grade_counts']}`",
         f"- A등급 평균 질문 후보 수: `{summary['avg_questions_per_grade_a_doc']}`",
         f"- 최신 A등급 문서 날짜: `{summary['latest_grade_a_date']}`",
         "",
@@ -856,7 +1080,9 @@ def render_markdown(summary: dict, results: list[AuditResult]) -> str:
                     "",
                     f"- URL: {result.url}",
                     f"- Source: `{result.source}`",
+                    f"- Roles: `{result.roles}`",
                     f"- Published: `{result.published_at}`",
+                    f"- Freshness: `{result.freshness}`",
                     f"- Score: `{result.score}`",
                     f"- Questions: `{result.question_count}`",
                     f"- Reason: {result.reason}",
@@ -871,6 +1097,7 @@ def render_markdown(summary: dict, results: list[AuditResult]) -> str:
     for result in results:
         lines.append(
             f"- `{result.grade}` score={result.score} q={result.question_count} "
+            f"freshness={result.freshness} roles={','.join(result.roles or ['unknown'])} "
             f"source={result.source} title={result.title} url={result.url}"
         )
     lines.append("")
@@ -886,13 +1113,13 @@ def render_manual_review_prompt(results: list[AuditResult]) -> str:
         "AI 모의면접 RAG Knowledge Base에 넣을 수 있는지 A/B/C/D로 재분류해주세요.",
         "",
         "등급 기준:",
-        "- A: 실제 기업 면접 후기이며, 실제로 받은 백엔드/CS 기술 질문이 3개 이상 있음",
+        "- A: 실제 기업 면접 후기이며, 실제로 받은 개발 직무/CS 기술 질문이 3개 이상 있음",
         "- B: 실제 기업 면접 후기지만 질문이 적거나, 회사/개인 프로젝트 맥락이 강해 일반화가 어려움",
-        "- C: 실제 후기는 아니지만 기술 면접 질문 은행/가이드로 보조 활용 가능",
+        "- C: 실제 후기는 아니지만 개발 직무 기술면접 질문 은행/가이드로 보조 활용 가능",
         "- D: 광고, 강의/멘토링 홍보, 동아리/부트캠프 면접, 개인 회고/답변문, 비기술 질문, 노이즈",
         "",
         "주의:",
-        "- 자기소개, 지원동기, 마지막 질문, 회사 위치/조직 관련 질문은 백엔드 기술 질문으로 세지 마세요.",
+        "- 자기소개, 지원동기, 마지막 질문, 회사 위치/조직 관련 질문은 개발 직무 기술 질문으로 세지 마세요.",
         "- 답변/회고 문장은 질문으로 세지 마세요.",
         "- 특정 회사 내부 시스템에 지나치게 묶인 질문은 B로 낮춰주세요.",
         "- GitHub 질문은행, 강의 페이지, 멘토링 홍보, 취업 가이드는 A가 될 수 없습니다.",
@@ -910,7 +1137,8 @@ def render_manual_review_prompt(results: list[AuditResult]) -> str:
         '      "index": 1,',
         '      "grade": "A|B|C|D",',
         '      "reason": "짧은 이유",',
-        '      "usable_questions": ["실제로 쓸 수 있는 백엔드/CS 기술 질문만"]',
+        '      "roles": ["backend|frontend|devops_infra|ai_ml_data|cs_common|unknown"],',
+        '      "usable_questions": ["실제로 쓸 수 있는 개발 직무/CS 기술 질문만"]',
         "    }",
         "  ]",
         "}",
@@ -927,7 +1155,9 @@ def render_manual_review_prompt(results: list[AuditResult]) -> str:
                 "",
                 f"- URL: {result.url}",
                 f"- Source: {result.source}",
+                f"- Roles: {result.roles}",
                 f"- Published: {result.published_at}",
+                f"- Freshness: {result.freshness}",
                 f"- Rule score: {result.score}",
                 f"- Rule reason: {result.reason}",
                 "- Rule question samples:",
@@ -967,7 +1197,7 @@ def collect_candidates(provider: str, queries: list[str], max_results_per_query:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Audit public backend interview-question sources.")
+    parser = argparse.ArgumentParser(description="Audit public developer interview-question sources.")
     parser.add_argument(
         "--provider",
         choices=["auto", "naver", "serpapi", "tistory", "velog", "google", "multi", "none"],
@@ -983,9 +1213,32 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed-url", action="append", default=[])
     parser.add_argument("--max-results-per-query", type=int, default=10)
     parser.add_argument("--fetch-limit", type=int, default=120)
+    parser.add_argument(
+        "--min-recent-year",
+        type=int,
+        default=2023,
+        help="이 연도 이후 발행 문서를 최신(recent)으로 분류합니다. 기본값은 2023입니다.",
+    )
+    parser.add_argument(
+        "--fetch-offset",
+        type=int,
+        default=0,
+        help="후보 URL 목록에서 앞쪽 N개를 건너뛰고 실사합니다. 큰 작업을 여러 배치로 나눌 때 사용합니다.",
+    )
     parser.add_argument("--min-content-chars", type=int, default=800)
     parser.add_argument("--sleep-seconds", type=float, default=0.5)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="output-dir의 audit_checkpoint.json 또는 audit_report.json을 읽어 이미 실사한 URL을 건너뜁니다.",
+    )
+    parser.add_argument(
+        "--checkpoint-every",
+        type=int,
+        default=25,
+        help="N개 문서 실사마다 audit_checkpoint.json을 저장합니다. 0이면 중간 저장을 끕니다.",
+    )
     return parser.parse_args()
 
 
@@ -1003,11 +1256,29 @@ def main() -> None:
         print("[audit] 후보 URL이 없습니다. 검색 API 키를 설정하거나 --seed-url / --seed-file을 사용하세요.")
         return
 
+    if args.fetch_offset > 0:
+        candidates = candidates[args.fetch_offset :]
+        print(f"[audit] fetch offset 적용: 앞쪽 {args.fetch_offset}개 건너뜀, 남은 후보 {len(candidates)}개")
+
+    checkpoint_path = args.output_dir / "audit_checkpoint.json"
+    existing_results: list[AuditResult] = []
+    if args.resume:
+        existing_results = load_results(checkpoint_path)
+        if not existing_results:
+            existing_results = load_results(args.output_dir / "audit_report.json")
+        for result in existing_results:
+            result.freshness = classify_freshness(result.published_at, args.min_recent_year)
+        print(f"[audit] resume: 기존 결과 {len(existing_results)}개 로드")
+
     results = audit_candidates(
         candidates=candidates,
         fetch_limit=args.fetch_limit,
         min_content_chars=args.min_content_chars,
         sleep_seconds=args.sleep_seconds,
+        min_recent_year=args.min_recent_year,
+        existing_results=existing_results,
+        checkpoint_path=checkpoint_path,
+        checkpoint_every=args.checkpoint_every,
     )
     write_reports(results, args.output_dir)
     print(f"[audit] 리포트 저장 완료: {args.output_dir}")
