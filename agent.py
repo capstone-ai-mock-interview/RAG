@@ -221,10 +221,16 @@ class InterviewerAgent(Agent):
 
         logger.info("[첫 질문] %s", result["question"])
 
+        await self._publish_question(result, is_follow_up=False, msg_type="QUESTION_SPEAKING")
         await self._say(result["question"])
         await self._publish_question(result, is_follow_up=False)
 
-    async def _publish_question(self, result: dict, is_follow_up: bool) -> None:
+    async def _publish_question(
+        self,
+        result: dict,
+        is_follow_up: bool,
+        msg_type: str = "QUESTION",
+    ) -> None:
         """QUESTION Data Message를 Room에 publish한다 (§5.4).
 
         parent 탐색 규칙:
@@ -245,7 +251,7 @@ class InterviewerAgent(Agent):
                         break
 
             payload = {
-                "type": "QUESTION",
+                "type": msg_type,
                 "payload": {
                     "turnNumber": len(history),
                     "text": result["question"],
@@ -260,7 +266,8 @@ class InterviewerAgent(Agent):
                 topic="interview",
             )
             logger.info(
-                "[QUESTION publish] turn=%d isFollowUp=%s parent=%d",
+                "[%s publish] turn=%d isFollowUp=%s parent=%d",
+                msg_type,
                 len(history),
                 is_follow_up,
                 parent_turn_number,
@@ -368,6 +375,25 @@ class InterviewerAgent(Agent):
                 last_turn = self.interview.history[-1] if self.interview.history else None
                 if last_turn:
                     logger.info("[질문 반복 요청] answer=%s", answer.strip())
+                    try:
+                        repeat_speaking_payload = {
+                            "type": "QUESTION_SPEAKING",
+                            "payload": {
+                                "turnNumber": len(self.interview.history),
+                                "text": last_turn.question,
+                                "intent": last_turn.question_types,
+                                "isFollowUp": last_turn.is_follow_up,
+                                "parentTurnNumber": last_turn.parent_turn_number,
+                                "isRepeat": True,
+                            },
+                        }
+                        await self.session.room_io.room.local_participant.publish_data(
+                            payload=json.dumps(repeat_speaking_payload).encode("utf-8"),
+                            reliable=True,
+                            topic="interview",
+                        )
+                    except Exception as e:
+                        logger.warning("[QUESTION_SPEAKING repeat publish 실패] %s", e)
                     await self._say(last_turn.question)
                     try:
                         repeat_payload = {
@@ -429,6 +455,7 @@ class InterviewerAgent(Agent):
             # history[-1] 은 _choose_next_question() 내부 add_question() 으로 추가된 새 질문.
             # is_follow_up 은 history[-1].is_follow_up 을 직접 읽어 사용한다.
             last_added = self.interview.history[-1]
+            await self._publish_question(result, is_follow_up=last_added.is_follow_up, msg_type="QUESTION_SPEAKING")
             await self._say(result["question"])
             await self._publish_question(result, is_follow_up=last_added.is_follow_up)
         finally:
@@ -753,6 +780,7 @@ class GroupInterviewerAgent(Agent):
             is_follow_up,
             result["question"],
         )
+        await self._publish_question(result, participant, turn_number, is_follow_up, msg_type="QUESTION_SPEAKING")
         await self._say(result["question"])
         await self._publish_question(result, participant, turn_number, is_follow_up)
         self._transitioning_turn = False
@@ -786,6 +814,7 @@ class GroupInterviewerAgent(Agent):
         participant: ParticipantInterviewSession,
         turn_number: int,
         is_follow_up: bool,
+        msg_type: str = "QUESTION",
     ) -> None:
         """GROUP QUESTION Data Message를 Room에 publish한다.
 
@@ -813,7 +842,7 @@ class GroupInterviewerAgent(Agent):
                         break
 
             payload = {
-                "type": "QUESTION",
+                "type": msg_type,
                 "payload": {
                     "turnNumber": turn_number,
                     "text": result["question"],
@@ -829,7 +858,8 @@ class GroupInterviewerAgent(Agent):
                 topic="interview",
             )
             logger.info(
-                "[GROUP QUESTION publish] turn=%d isFollowUp=%s parent=%d target=%s",
+                "[GROUP %s publish] turn=%d isFollowUp=%s parent=%d target=%s",
+                msg_type,
                 turn_number,
                 is_follow_up,
                 parent_turn_number,
