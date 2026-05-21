@@ -221,9 +221,8 @@ class InterviewerAgent(Agent):
 
         logger.info("[첫 질문] %s", result["question"])
 
-        # 음성 세션이 닫혀도 화면에는 질문이 떠야 하므로 publish를 먼저 수행한다.
-        await self._publish_question(result, is_follow_up=False)
         await self._say(result["question"])
+        await self._publish_question(result, is_follow_up=False)
 
     async def _publish_question(self, result: dict, is_follow_up: bool) -> None:
         """QUESTION Data Message를 Room에 publish한다 (§5.4).
@@ -426,12 +425,12 @@ class InterviewerAgent(Agent):
 
             logger.info("[다음 질문] turn=%d question=%s", turn_number, result["question"])
 
-            # ④ QUESTION publish — 음성 실패가 화면 질문 표시를 막지 않도록 먼저 전송한다.
+            # ④ TTS 재생 완료 후 QUESTION publish
             # history[-1] 은 _choose_next_question() 내부 add_question() 으로 추가된 새 질문.
             # is_follow_up 은 history[-1].is_follow_up 을 직접 읽어 사용한다.
             last_added = self.interview.history[-1]
-            await self._publish_question(result, is_follow_up=last_added.is_follow_up)
             await self._say(result["question"])
+            await self._publish_question(result, is_follow_up=last_added.is_follow_up)
         finally:
             self._transitioning_turn = False
 
@@ -754,8 +753,8 @@ class GroupInterviewerAgent(Agent):
             is_follow_up,
             result["question"],
         )
-        await self._publish_question(result, participant, turn_number, is_follow_up)
         await self._say(result["question"])
+        await self._publish_question(result, participant, turn_number, is_follow_up)
         self._transitioning_turn = False
 
     async def _wait_for_group_participants(self) -> None:
