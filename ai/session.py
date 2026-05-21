@@ -31,9 +31,11 @@ class InterviewSession:
     job_role: str
     resume_text: str
     system_prompt: str
+    resume_profile: str = ""
     cover_letter_text: str = ""
     history: list[ConversationTurn] = field(default_factory=list)
     current_answer_buffer: str = ""
+    claim_order: list[int] = field(default_factory=list)
 
     def add_question(
         self,

@@ -12,6 +12,7 @@ import asyncio
 import json
 import logging
 import os
+import random
 import re
 from dataclasses import dataclass
 from typing import Any
@@ -72,16 +73,25 @@ class LLMService:
 
     # ── Public API ─────────────────────────────────────────
 
-    def build_system_prompt(self, job_role: str, resume_text: str) -> str:
+    def build_system_prompt(
+        self,
+        job_role: str,
+        resume_text: str,
+        resume_profile: str = "",
+    ) -> str:
         return INTERVIEWER_SYSTEM_PROMPT.format(
             job_role=job_role,
-            resume_text=resume_text,
+            resume_context=_format_resume_context(resume_text, resume_profile),
         )
 
     async def generate_first_question(self, session: InterviewSession) -> dict[str, str]:
         """첫 질문 생성. KB 에서 이력서/직무 관련 자료를 검색해 프롬프트에 주입."""
-        reference = await self._retrieve(f"{session.job_role} 면접 질문 {session.resume_text[:200]}")
-        prompt = FIRST_QUESTION_PROMPT.format(reference_data=reference)
+        resume_focus = _select_resume_focus(session)
+        reference = await self._retrieve(_build_resume_query(session, resume_focus))
+        prompt = FIRST_QUESTION_PROMPT.format(
+            resume_focus=_format_resume_focus(resume_focus, session.resume_text),
+            reference_data=reference,
+        )
 
         result = await self._converse(
             system_prompt=session.system_prompt,
@@ -187,10 +197,10 @@ class LLMService:
         if user_answer:
             session.add_answer(user_answer)
 
-        reference = await self._retrieve(
-            f"{session.job_role} 면접 질문 {session.resume_text[:200]}"
-        )
+        resume_focus = _select_resume_focus(session)
+        reference = await self._retrieve(_build_resume_query(session, resume_focus))
         prompt = NEXT_QUESTION_PROMPT.format(
+            resume_focus=_format_resume_focus(resume_focus, session.resume_text),
             asked_topics=session.get_asked_topics(),
             reference_data=reference,
         )
@@ -298,6 +308,90 @@ def _parse_question_json(raw: str) -> dict[str, str]:
         return {"question": raw.strip(), "question_types": ""}
 
 
+def _load_resume_profile(resume_profile: str) -> dict[str, Any]:
+    if not resume_profile or not resume_profile.strip():
+        return {}
+    try:
+        data = json.loads(resume_profile)
+    except json.JSONDecodeError:
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _format_resume_context(resume_text: str, resume_profile: str) -> str:
+    profile = _load_resume_profile(resume_profile)
+    claims = profile.get("claims")
+    if profile and isinstance(claims, list) and claims:
+        lines = [f"요약: {profile.get('summary', '').strip() or '요약 없음'}", "", "이력서에서 확인한 사실:"]
+        for index, claim in enumerate(claims[:8], 1):
+            if not isinstance(claim, dict):
+                continue
+            text = str(claim.get("text", "")).strip()
+            keywords = claim.get("keywords", [])
+            keyword_text = ", ".join(str(keyword) for keyword in keywords if str(keyword).strip())
+            if text:
+                suffix = f" (관련 키워드: {keyword_text})" if keyword_text else ""
+                lines.append(f"{index}. {text}{suffix}")
+        return "\n".join(lines)
+
+    return resume_text or "(이력서 정보 없음)"
+
+
+def _resume_claims(session: InterviewSession) -> list[dict[str, Any]]:
+    profile = _load_resume_profile(session.resume_profile)
+    claims = profile.get("claims", [])
+    return [claim for claim in claims if isinstance(claim, dict)]
+
+
+def _select_resume_focus(session: InterviewSession) -> dict[str, Any] | None:
+    claims = _resume_claims(session)
+    if not claims:
+        return None
+
+    asked_main_questions = sum(1 for turn in session.history if not turn.is_follow_up)
+    if asked_main_questions >= len(claims):
+        return None
+
+    if len(session.claim_order) != len(claims):
+        session.claim_order = list(range(len(claims)))
+        random.shuffle(session.claim_order)
+
+    return claims[session.claim_order[asked_main_questions]]
+
+
+def _format_resume_focus(
+    resume_focus: dict[str, Any] | None,
+    fallback_resume_text: str,
+) -> str:
+    if resume_focus:
+        text = str(resume_focus.get("text", "")).strip()
+        keywords = resume_focus.get("keywords", [])
+        keyword_text = ", ".join(str(keyword) for keyword in keywords if str(keyword).strip())
+        if text and keyword_text:
+            return f"{text}\n관련 키워드: {keyword_text}"
+        if text:
+            return text
+
+    fallback = (fallback_resume_text or "").strip()
+    return fallback[:500] if fallback else "(이력서에서 사용할 구체적 사실 없음)"
+
+
+def _build_resume_query(
+    session: InterviewSession,
+    resume_focus: dict[str, Any] | None,
+) -> str:
+    if resume_focus:
+        keywords = resume_focus.get("keywords", [])
+        keyword_text = " ".join(str(keyword) for keyword in keywords if str(keyword).strip())
+        text = str(resume_focus.get("text", "")).strip()
+        if keyword_text:
+            return f"{session.job_role} {keyword_text} 면접 질문"
+        if text:
+            return f"{session.job_role} {text[:120]} 면접 질문"
+
+    return f"{session.job_role} 직무 기술 면접 질문"
+
+
 def _format_extracted_claims(extracted_claims: list[str]) -> str:
     if not extracted_claims:
         return "(추출된 핵심 내용 없음)"
@@ -364,9 +458,15 @@ class MockLLMService:
         self._follow_idx = 0
         logger.warning("MockLLMService 사용 중 — 실제 Bedrock 호출 없음")
 
-    def build_system_prompt(self, job_role: str, resume_text: str) -> str:
+    def build_system_prompt(
+        self,
+        job_role: str,
+        resume_text: str,
+        resume_profile: str = "",
+    ) -> str:
         return INTERVIEWER_SYSTEM_PROMPT.format(
-            job_role=job_role, resume_text=resume_text,
+            job_role=job_role,
+            resume_context=_format_resume_context(resume_text, resume_profile),
         )
 
     async def generate_first_question(self, session: InterviewSession) -> dict[str, str]:
